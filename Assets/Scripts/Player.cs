@@ -5,6 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Player : MonoBehaviour
 {
+    public Staff playerStaff;
+
+    #region GridControl
     public Attatchment Att;
     private enum MoveState{
         FreeWalk,
@@ -13,6 +16,8 @@ public class Player : MonoBehaviour
     private bool AttMoving;
     private MoveState state = MoveState.FreeWalk;
     private GridPanel CurPanel;
+    #endregion
+    #region FreeControl
     float PlayerInputHor;
     float PlayerInputVer;
     public float MoveSpeed;
@@ -20,22 +25,15 @@ public class Player : MonoBehaviour
     private Vector3 LookDirection;
     private Vector3 EulerRotation;
     private Quaternion TargetRotation;
+    #endregion
 
-#region CollisionCheck
-[SerializeField]
-    private float ModelWidth;
-[SerializeField]
-    private float ModelLength;
-[SerializeField]
-private int RayCount;
-#endregion
+    private bool DroppingStaff;
     Rigidbody rig;
     // Start is called before the first frame update
     void Start()
     {
         Att = new Attatchment();
-        ModelWidth = GetComponent<BoxCollider>().size.x;
-        ModelLength = GetComponent<BoxCollider>().size.z;
+        EulerRotation = InitialLookDirection;
         rig = GetComponent<Rigidbody>();
         LookDirection = InitialLookDirection;
     }
@@ -44,7 +42,7 @@ private int RayCount;
     void Update()
     {
         Move();
-        if(Input.GetKeyDown(KeyCode.E))
+        if(Input.GetKeyDown(KeyCode.Space)&& !DroppingStaff)
         { 
             if(!Att.Attatched){
             Attatch();
@@ -55,19 +53,56 @@ private int RayCount;
             state = MoveState.FreeWalk;
             }
         }
+        if(Att.Attatched)
+        {
+            if(Input.GetKeyDown(KeyCode.E))
+                Att.AttatchedObj.RotateObject(1);
+            
+            else if(Input.GetKeyDown(KeyCode.Q))
+                Att.AttatchedObj.RotateObject(-1);
+        }
+    
+        if(Input.GetKeyDown(KeyCode.F) && !Att.Attatched)
+        {
+            if(!playerStaff.InGrid){
+                Direction curdir = MoveDirection(EulerRotation) ;
+                if(curdir!= Direction.INVALID){
+                    DroppingStaff = true;
+                    int Row = (int)(CurPanel.position.x + EulerRotation.x);
+                    int Col = (int)(CurPanel.position.y + EulerRotation.z);
+                    GridPanel targetPanel = grid.thisgrid.panellist[Row,Col];
+                    playerStaff.DropStaff(targetPanel);
+                    Att = new Attatchment(true,curdir,playerStaff);
+                    state = MoveState.Attatched;
+                }
+            }
+            else
+            {           
+                playerStaff.ReturnStaff(this.transform);
+            }       
+        }
+        else if(Input.GetKeyUp(KeyCode.F))
+        {
+            if(playerStaff.InGrid){
+                DroppingStaff = false;
+            Att.RemoveAttatch();    
+            state = MoveState.FreeWalk;
+            }
+        }
+    
     }
 
     void FixedUpdate()
     {
         Vector3 PlayerInput = new Vector3(PlayerInputHor,0, PlayerInputVer).normalized;
         if(LookDirection != Vector3.zero){
-        TargetRotation = Quaternion.LookRotation(LookDirection,transform.up);
-        EulerRotation = LookDirection;
+            TargetRotation = Quaternion.LookRotation(LookDirection,transform.up);
+            EulerRotation = LookDirection;
         }   
         if(state == MoveState.FreeWalk){
-             Quaternion NewRotation = Quaternion.Slerp(transform.rotation,TargetRotation,.5f);
-        transform.rotation = NewRotation;
-        rig.velocity = PlayerInput * MoveSpeed;
+            Quaternion NewRotation = Quaternion.Slerp(transform.rotation,TargetRotation,.5f);
+            transform.rotation = NewRotation;
+            rig.velocity = PlayerInput * MoveSpeed;
         }
         else {
         rig.velocity = Vector3.zero;
@@ -154,7 +189,7 @@ private int RayCount;
         //  grid.thisgrid.panellist[(int)ObjTargetPanel.position.x,
         //      (int)ObjTargetPanel.position.y].SetItem(Att.AttatchedObj);
         Att.AttatchedObj.SetPosition(objtargetpos,ObjTargetPanel.position);
-        
+        CheckPanelPos();
         CurPanel = targetPanel;
 
     }
@@ -179,6 +214,7 @@ private int RayCount;
             
         }
     }
+
     Direction MoveDirection(Vector3 Dir)
     {
         if(Dir == Vector3.forward)

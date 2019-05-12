@@ -8,6 +8,7 @@ public class grid : MonoBehaviour
     public int Rows;
     public int Columns;
     public float panelSize;
+    public GameObject Wall;
     public GridPanel panel;
 
     public GameObject newLevel;
@@ -44,6 +45,10 @@ public static grid thisgrid;
        GridObj newobj = Instantiate(obj, panellist[(int)Rows/2,0].transform.position, Quaternion.identity).GetComponent<GridObj>();
        newobj.GridPosition = new Vector2((int)Rows/2,0); 
        panellist[(int)Rows/2,0].SetItem(newobj);
+    }
+    void CreateWalls()
+    {
+        
     }
 
 }
