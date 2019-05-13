@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class GridObj : MonoBehaviour
 {
+       public Objcolor oColor = Objcolor.NONE;
+    public ObjType objtype;
     public Vector2 GridPosition;
 
+    public Direction DirRot;
     public int idRotation;
-    Vector3 RotDirection;
+    public Vector3 RotDirection;
     private bool Rotating;
     public bool Attatched = false;
     void Start(){
@@ -32,9 +35,10 @@ public class GridObj : MonoBehaviour
         else if(idRotation<0)
         idRotation = 3;
         RotDirection = SetRot();
+        DirRot = MoveDirection(RotDirection);
         //StartCoroutine(Rotate(idRotation));
     }
-    Vector3 SetRot()
+    public Vector3 SetRot()
     {
         switch(idRotation)
         {
@@ -71,4 +75,38 @@ public class GridObj : MonoBehaviour
         Attatched = false;
         grid.thisgrid.panellist[(int)GridPosition.x,(int)GridPosition.y].SetItem(this);
     }
-}
+    public Direction MoveDirection(Vector3 Dir)
+    {
+        if(Dir == Vector3.forward)
+        return Direction.FORWARD;
+
+        else if(Dir == Vector3.back)
+        return Direction.BACK;
+
+        else if(Dir == Vector3.left)
+        return Direction.LEFT;
+
+        else if(Dir == Vector3.right)
+        return Direction.RIGHT;
+
+        else 
+        return Direction.INVALID; 
+
+    }
+} 
+public enum Objcolor{
+        GREEN,
+        BLUE,
+        RED,
+        NONE
+    }
+
+    public enum ObjType
+    {
+        REFLECTOR,
+        DOUBLE, 
+        GLASS,
+        WALL,
+        TARGET,
+        OTHER
+    }

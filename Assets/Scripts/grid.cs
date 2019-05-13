@@ -17,11 +17,17 @@ public class grid : MonoBehaviour
 
 #region GridObjects
 public GameObject obj;
+public GameObject Reflector;
+public GameObject Glass;
 public static grid thisgrid;
 #endregion
+    void Awake()
+    {
+        thisgrid = this;
+    }
     void Start()
     { 
-        thisgrid = this;
+       
         newLevel = new GameObject("GridLevel");
 
         CreatePlaneArea();
@@ -42,13 +48,73 @@ public static grid thisgrid;
                 panellist[x,i] = newpanel;
             }
         }
-       GridObj newobj = Instantiate(obj, panellist[(int)Rows/2,0].transform.position, Quaternion.identity).GetComponent<GridObj>();
-       newobj.GridPosition = new Vector2((int)Rows/2,0); 
-       panellist[(int)Rows/2,0].SetItem(newobj);
+        SpawnObj(Rows-1,(int)Columns/2,Reflector);
+        SpawnObj(0,(int)Columns/2,Glass);
+    }
+    void SpawnObj(int row, int col,GameObject obj)
+    {
+        Vector3 newobjpos= panellist[row,col].transform.position;
+        newobjpos.y +=.5f;
+        GridObj newobj = Instantiate(obj, newobjpos, Quaternion.identity).GetComponent<GridObj>();
+        newobj.GridPosition = new Vector2(row,col); 
+        panellist[row,col].SetItem(newobj);
     }
     void CreateWalls()
     {
         
     }
+    public GridPanel getNextPanel(int Row, int Col, Direction dir)
+    {
+        switch(dir)
+        {
+            case Direction.FORWARD:
+            Col++;
+            break;
+            
+            case Direction.BACK:
+            Col--;
+            break;
+            
+            case Direction.LEFT:
+            Row--;
+            break;
+            
+            case Direction.RIGHT:
+            Row++;
+            break;
+        }
+        if(Row < 0|| Col <0|| Row >= Rows|| Col >=Columns)
+        return null;
+        else
+        return panellist[Row,Col];
+        
+    }
+    
+    Direction MoveDirection(Vector3 Dir)
+    {
+        if(Dir == Vector3.forward)
+        return Direction.FORWARD;
 
+        else if(Dir == Vector3.back)
+        return Direction.BACK;
+
+        else if(Dir == Vector3.left)
+        return Direction.LEFT;
+
+        else if(Dir == Vector3.right)
+        return Direction.RIGHT;
+
+        else 
+        return Direction.INVALID; 
+
+    }
 }
+public enum Direction{
+     
+        FORWARD,
+        BACK,
+        LEFT,
+        RIGHT,
+        INVALID
+    }
+

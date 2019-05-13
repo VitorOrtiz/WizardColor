@@ -29,6 +29,11 @@ public class Player : MonoBehaviour
 
     private bool DroppingStaff;
     Rigidbody rig;
+    public static Player player;
+    void Awake()
+    {
+        player =this;
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -71,6 +76,8 @@ public class Player : MonoBehaviour
                     int Row = (int)(CurPanel.position.x + EulerRotation.x);
                     int Col = (int)(CurPanel.position.y + EulerRotation.z);
                     GridPanel targetPanel = grid.thisgrid.panellist[Row,Col];
+                    if(targetPanel.HasItem)
+                    return;
                     playerStaff.DropStaff(targetPanel);
                     Att = new Attatchment(true,curdir,playerStaff);
                     state = MoveState.Attatched;
@@ -234,14 +241,6 @@ public class Player : MonoBehaviour
 
     }
 }
-public enum Direction{
-     
-        FORWARD,
-        BACK,
-        LEFT,
-        RIGHT,
-        INVALID
-    }
 
 [System.Serializable]
 public class Attatchment

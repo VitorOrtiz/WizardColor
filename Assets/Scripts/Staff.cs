@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Staff : GridObj
 {
+    public Beam beam;
     public bool InGrid;
     private bool Firing;
     public Transform FiringPoint;
@@ -18,15 +19,17 @@ public class Staff : GridObj
     {
         HoldingPosition = transform.position;
         HoldingRotation = transform.rotation;
-        GridRotation = Quaternion.identity;
-        
+        GridRotation = Quaternion.identity;    
+        RotDirection = SetRot();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(InGrid)
-     Rotate();   
+    if(InGrid)
+        Rotate();   
+    if(Input.GetKeyDown(KeyCode.F1))
+    beam.CBeam(panel,MoveDirection(RotDirection),FiringPoint.position);
     }
     public void Activate()
     {
@@ -50,6 +53,7 @@ public class Staff : GridObj
         transform.localRotation = HoldingRotation;
         transform.localPosition = HoldingPosition;
         InGrid = false;
+        beam.ResetCounters();
         panel.RemoveItem();
         panel = null;
         AttatchtoPlayer();
