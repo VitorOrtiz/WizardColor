@@ -58,13 +58,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f29c080ec96fbd84b9073c751eb3d44a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CanDrag: 1
+  LitUpRed: {fileID: 0}
+  LitUpGreen: {fileID: 0}
+  LitUpBlue: {fileID: 0}
   oColor: 3
   objtype: 0
   GridPosition: {x: 0, y: 0}
+  Cancolor: 0
   DirRot: 0
   idRotation: 0
   RotDirection: {x: 0, y: 0, z: 0}
   Attatched: 0
+  mat: {fileID: 847589987361598510}
+  redMat: {fileID: 2100000, guid: a68be4169253c9345a37b4ae56a2ded0, type: 2}
+  GreenMat: {fileID: 2100000, guid: 035de9e3abf31d240afe49d0980614fa, type: 2}
+  BlueMat: {fileID: 2100000, guid: 9650bb81ef1536744b3e2d79a1e08b01, type: 2}
 --- !u!1001 &847589987363763278
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -137,6 +146,12 @@ PrefabInstance:
 --- !u!4 &847589987363368654 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 9c913fdaedab0484db26bb7c0def173d,
+    type: 3}
+  m_PrefabInstance: {fileID: 847589987363763278}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &847589987361598510 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2300000, guid: 9c913fdaedab0484db26bb7c0def173d,
     type: 3}
   m_PrefabInstance: {fileID: 847589987363763278}
   m_PrefabAsset: {fileID: 0}

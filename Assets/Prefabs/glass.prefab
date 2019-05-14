@@ -104,10 +104,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f29c080ec96fbd84b9073c751eb3d44a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oColor: 0
+  CanDrag: 1
+  LitUpRed: {fileID: 0}
+  LitUpGreen: {fileID: 0}
+  LitUpBlue: {fileID: 0}
+  oColor: 3
   objtype: 2
   GridPosition: {x: 0, y: 0}
+  Cancolor: 1
   DirRot: 0
   idRotation: 0
   RotDirection: {x: 0, y: 0, z: 0}
   Attatched: 0
+  mat: {fileID: 5199550284645135863}
+  redMat: {fileID: 2100000, guid: a68be4169253c9345a37b4ae56a2ded0, type: 2}
+  GreenMat: {fileID: 2100000, guid: 035de9e3abf31d240afe49d0980614fa, type: 2}
+  BlueMat: {fileID: 2100000, guid: 9650bb81ef1536744b3e2d79a1e08b01, type: 2}

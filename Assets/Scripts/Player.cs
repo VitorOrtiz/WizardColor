@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     }
     private bool AttMoving;
     private MoveState state = MoveState.FreeWalk;
-    private GridPanel CurPanel;
+    public GridPanel CurPanel;
     #endregion
     #region FreeControl
     float PlayerInputHor;
@@ -72,12 +72,13 @@ public class Player : MonoBehaviour
             if(!playerStaff.InGrid){
                 Direction curdir = MoveDirection(EulerRotation) ;
                 if(curdir!= Direction.INVALID){
-                    DroppingStaff = true;
+                    
                     int Row = (int)(CurPanel.position.x + EulerRotation.x);
                     int Col = (int)(CurPanel.position.y + EulerRotation.z);
                     GridPanel targetPanel = grid.thisgrid.panellist[Row,Col];
                     if(targetPanel.HasItem)
                     return;
+                    DroppingStaff = true;
                     playerStaff.DropStaff(targetPanel);
                     Att = new Attatchment(true,curdir,playerStaff);
                     state = MoveState.Attatched;
@@ -98,7 +99,10 @@ public class Player : MonoBehaviour
         }
     
     }
-
+    public Direction playerDirection{
+        get{return MoveDirection(EulerRotation);}
+        
+    }
     void FixedUpdate()
     {
         Vector3 PlayerInput = new Vector3(PlayerInputHor,0, PlayerInputVer).normalized;
@@ -211,7 +215,8 @@ public class Player : MonoBehaviour
             GridPanel targetPanel = grid.thisgrid.panellist[row,col];
 
                 if(targetPanel.HasItem){// se o proximo tiver um objeto
-
+                    if(!targetPanel.item.CanDrag)
+                    return;
                     Direction dir = MoveDirection(EulerRotation);//pega a orientação 
                     Att = new Attatchment(true, dir, targetPanel.item);//cria novo Attatch com o objeto e orientação
                     Att.AttatchedObj.AttatchtoPlayer();

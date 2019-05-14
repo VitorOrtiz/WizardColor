@@ -4,22 +4,100 @@ using UnityEngine;
 
 public class GridObj : MonoBehaviour
 {
-       public Objcolor oColor = Objcolor.NONE;
+    
+    public bool CanDrag;
+    public Material LitUpRed,LitUpGreen,LitUpBlue;
+    public Objcolor oColor = Objcolor.NONE;
     public ObjType objtype;
     public Vector2 GridPosition;
-
+    public bool Cancolor;
     public Direction DirRot;
     public int idRotation;
     public Vector3 RotDirection;
     private bool Rotating;
     public bool Attatched = false;
+
+    private bool lightUp;
+    #region Glass
+
+    public MeshRenderer mat;
+    private Material defmat;
+    public Material redMat,GreenMat,BlueMat;
+    // Start is called before the first frame update
+      public void ChangeColor(Objcolor TarColor)
+    {
+        
+        switch(TarColor){
+            case Objcolor.RED:
+            oColor = Objcolor.RED;
+            mat.material = redMat;
+            break;
+            case Objcolor.GREEN:
+            oColor = Objcolor.GREEN;
+            mat.material = GreenMat;
+            break;
+            case Objcolor.BLUE:
+            oColor = Objcolor.BLUE;
+            mat.material = BlueMat;
+            break;
+            default:
+            oColor = Objcolor.NONE;
+            mat.material = defmat;
+            break;
+        }
+        oColor = TarColor;
+    }
+    #endregion
+    
+    public void LightUP(){
+        if(objtype != ObjType.TARGET)
+            return;
+        switch(oColor)
+        {
+            case Objcolor.RED:
+            mat.material = LitUpRed;
+            break;
+            case Objcolor.GREEN:
+            mat.material = LitUpGreen;
+            break;
+            case Objcolor.BLUE:
+            mat.material = LitUpBlue;
+            break;
+        }
+        
+        
+    }
+    
+    public void LightDown(){
+        if(objtype != ObjType.TARGET)
+            return;
+        switch(oColor)
+        {
+            case Objcolor.RED:
+            mat.material = redMat;
+            break;
+            case Objcolor.GREEN:
+            mat.material = GreenMat;
+            break;
+            case Objcolor.BLUE:
+            mat.material =BlueMat;
+            break;
+            case Objcolor.NONE:
+            mat.material = defmat;
+            break;
+        }
+        
+    }
     void Start(){
+       // mat = transform.GetChild(0).GetComponent<MeshRenderer>();
+       LightDown();
+        defmat = mat.material;
         RotDirection = SetRot();
     }
     
     void Update()
     {
-     Rotate();
+        Rotate();
     }
     public void Rotate()
     {

@@ -26,10 +26,22 @@ public class Staff : GridObj
     // Update is called once per frame
     void Update()
     {
-    if(InGrid)
+    if(InGrid){
         Rotate();   
-    if(Input.GetKeyDown(KeyCode.F1))
-    beam.CBeam(panel,MoveDirection(RotDirection),FiringPoint.position);
+        if(Input.GetKeyDown(KeyCode.F1)){
+        Firing = true;
+        beam.CBeam(panel,MoveDirection(RotDirection),FiringPoint.position);
+        }
+        if(panel.position != GridPosition)
+        panel = grid.thisgrid.panellist[(int)GridPosition.x,(int)GridPosition.y];   
+
+        }
+        if(Attatched && Firing){
+         beam.ResetCounters();
+         Firing = false;
+        }
+        
+        
     }
     public void Activate()
     {

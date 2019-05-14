@@ -19,7 +19,10 @@ public class grid : MonoBehaviour
 public GameObject obj;
 public GameObject Reflector;
 public GameObject Glass;
+public GameObject Target;
 public static grid thisgrid;
+
+public List<GridObj> targets = new List<GridObj>();
 #endregion
     void Awake()
     {
@@ -48,14 +51,30 @@ public static grid thisgrid;
                 panellist[x,i] = newpanel;
             }
         }
-        SpawnObj(Rows-1,(int)Columns/2,Reflector);
-        SpawnObj(0,(int)Columns/2,Glass);
+        SpawnObj(Reflector, Rows-1, (int)Columns/2);
+        SpawnObj(Glass, 0, (int)Columns/2);
+        SpawnObj(Target,(int)Rows/2 - 1,Columns -1,Objcolor.RED);
+        SpawnObj(Target,(int)Rows/2,Columns -1,Objcolor.GREEN);
+        SpawnObj(Target,(int)Rows/2 +1,Columns -1,Objcolor.BLUE);
     }
-    void SpawnObj(int row, int col,GameObject obj)
+    public void ResetTargets()
+    {
+        foreach(GridObj obj in targets)
+        {
+            obj.LightDown();
+        }
+    }
+    void SpawnObj(GameObject obj,int row, int col, Objcolor color = Objcolor.NONE)
     {
         Vector3 newobjpos= panellist[row,col].transform.position;
         newobjpos.y +=.5f;
         GridObj newobj = Instantiate(obj, newobjpos, Quaternion.identity).GetComponent<GridObj>();
+        if(newobj.objtype == ObjType.TARGET)
+        {
+        targets.Add(newobj);
+        if(color != Objcolor.NONE)
+        newobj.ChangeColor(color);
+        }
         newobj.GridPosition = new Vector2(row,col); 
         panellist[row,col].SetItem(newobj);
     }

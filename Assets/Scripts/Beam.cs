@@ -45,11 +45,13 @@ public class Beam : MonoBehaviour
         }
         Segments = new List<lightBeamSeg>();
         AvailableLines = new List<LineRenderer>(lineSegments);
+        gridcontrol.ResetTargets();
    
     }
     IEnumerator CreateBeam(GridPanel initialPanel,Direction InitialDir,Vector3 InitialPosition)
     {
     ResetCounters();
+
     bool HasLineOpen = true;
     List<lightBeamSeg> newLines = new List<lightBeamSeg>();
    // List<lightBeamSeg> Openlines = new List<lightBeamSeg>();
@@ -102,7 +104,7 @@ public class Beam : MonoBehaviour
                 seg.line.colorGradient = (obj.item.oColor == Objcolor.RED)?RedGradient:
                 obj.item.oColor == Objcolor.GREEN?GreenGradient: 
                 obj.item.oColor == Objcolor.BLUE?BlueGradient:NewGradient;
-
+                seg.lineColor = obj.item.oColor;
                 CurrentLine.line.positionCount = positions.Count;
                 CurrentLine.line.SetPositions(positions.ToArray());
                 CurCol = (int)obj.position.y;
@@ -128,8 +130,11 @@ public class Beam : MonoBehaviour
                 positions.Add(nextPos);
                 CurrentLine.line.positionCount = positions.Count;
                 CurrentLine.line.SetPositions(positions.ToArray());
-                    HasLineOpen = false;
-                    newLines.Add(CurrentLine);
+                HasLineOpen = false;
+                
+                newLines.Add(CurrentLine);
+                if(CurrentLine.lineColor == obj.item.oColor)
+                obj.item.LightUP();
                 break;
                 case ObjType.OTHER:
                 break;
@@ -145,6 +150,7 @@ public class Beam : MonoBehaviour
                 CurrentLine.line.SetPositions(positions.ToArray());
                 Debug.Log("No item Found");
                     HasLineOpen = false;
+                
                 newLines.Add(CurrentLine);
         }
         Debug.Log("Running");
@@ -182,6 +188,7 @@ public class Beam : MonoBehaviour
 public class lightBeamSeg{
     public LineRenderer line;
     public Direction dir;
+    public Objcolor lineColor = Objcolor.NONE;
     public List<GridValue> points = new List<GridValue>();
     public lightBeamSeg(LineRenderer line,Direction dir, List<GridValue> points)
     {
