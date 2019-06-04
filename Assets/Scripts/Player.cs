@@ -75,10 +75,14 @@ public class Player : MonoBehaviour
                     
                     int Row = (int)(CurPanel.position.x + EulerRotation.x);
                     int Col = (int)(CurPanel.position.y + EulerRotation.z);
-                    GridPanel targetPanel = grid.thisgrid.panellist[Row,Col];
-                    if(targetPanel.HasItem)
+                    GridPanel targetPanel = grid.thisgrid.getPanel(Row,Col);
+                    if(targetPanel.HasItem|| targetPanel.Wall|| targetPanel == null)
                     return;
                     DroppingStaff = true;
+                    
+                    Vector3 targetpos = CurPanel.transform.position;
+                    targetpos.y = transform.position.y;
+                    transform.position = targetpos;
                     playerStaff.DropStaff(targetPanel);
                     Att = new Attatchment(true,curdir,playerStaff);
                     state = MoveState.Attatched;
@@ -179,7 +183,7 @@ public class Player : MonoBehaviour
         
         targetPanel = grid.thisgrid.panellist[Row,Col];
         ObjTargetPanel = grid.thisgrid.panellist[ObjRow,ObjCol];
-        if(targetPanel.HasItem || ObjTargetPanel.HasItem)
+        if(targetPanel.HasItem || targetPanel.Wall || ObjTargetPanel.HasItem|| ObjTargetPanel.Wall)
         return;
 
         StartCoroutine(WalktoObjPos(targetPanel,ObjTargetPanel));   

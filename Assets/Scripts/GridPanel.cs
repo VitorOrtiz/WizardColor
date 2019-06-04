@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GridPanel : MonoBehaviour
 {
+    public bool Wall;
     public bool HasItem;
     public GridObj item;
     public Vector2 position;

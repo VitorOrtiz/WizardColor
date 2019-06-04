@@ -176,6 +176,9 @@ public enum Objcolor{
         GREEN,
         BLUE,
         RED,
+        YELLOW,
+        MAGENTA,
+        CYAN,
         NONE
     }
 

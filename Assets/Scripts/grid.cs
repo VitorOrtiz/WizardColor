@@ -8,7 +8,8 @@ public class grid : MonoBehaviour
     public int Rows;
     public int Columns;
     public float panelSize;
-    public GameObject Wall;
+
+    public GameObject Limit;
     public GridPanel panel;
 
     public GameObject newLevel;
@@ -16,10 +17,12 @@ public class grid : MonoBehaviour
 #endregion
 
 #region GridObjects
+public GameObject Wall;
 public GameObject obj;
 public GameObject Reflector;
 public GameObject Glass;
 public GameObject Target;
+public GameObject Double;
 public static grid thisgrid;
 
 public List<GridObj> targets = new List<GridObj>();
@@ -31,12 +34,14 @@ public List<GridObj> targets = new List<GridObj>();
     void Start()
     { 
        
-        newLevel = new GameObject("GridLevel");
-
-        CreatePlaneArea();
+      
+        Fase1();
     }
-    void CreatePlaneArea()
+    void CreatePlaneArea(int Rows,int Columns)
     {
+        this.Rows = Rows;
+        this.Columns = Columns;
+        newLevel = new GameObject("GridLevel");
         panellist = new GridPanel[Rows, Columns];
         for (int i = 0; i < Columns; i++) {
             for (int x = 0; x < Rows; x++)
@@ -51,11 +56,27 @@ public List<GridObj> targets = new List<GridObj>();
                 panellist[x,i] = newpanel;
             }
         }
-        SpawnObj(Reflector, Rows-1, (int)Columns/2);
-        SpawnObj(Glass, 0, (int)Columns/2);
-        SpawnObj(Target,(int)Rows/2 - 1,Columns -1,Objcolor.RED);
-        SpawnObj(Target,(int)Rows/2,Columns -1,Objcolor.GREEN);
-        SpawnObj(Target,(int)Rows/2 +1,Columns -1,Objcolor.BLUE);
+        createLimits(new Vector3(1,0,0));
+        createLimits(new Vector3(-1,0,0));
+        createLimits(new Vector3(0,0,1));
+        createLimits(new Vector3(0,0,-1));
+    }
+    void createLimits(Vector3 Direction)
+    {
+        Vector3 pos = newLevel.transform.position;
+        pos+= new Vector3(Direction.x *(Rows/2) +Direction.x,pos.y,Direction.z *(Columns/2) + Direction.z);
+        if(Direction.x != 0)
+        {
+            GameObject limit = Instantiate(Limit,pos,Quaternion.identity);
+            limit.transform.localScale = new Vector3(1,limit.transform.localScale.y,Columns);
+        } 
+        else if(Direction.z !=0)
+        {
+            GameObject limit = Instantiate(Limit,pos,Quaternion.identity);
+            limit.transform.localScale = new Vector3(Rows,limit.transform.localScale.y,1);
+        }
+        
+
     }
     public void ResetTargets()
     {
@@ -66,6 +87,11 @@ public List<GridObj> targets = new List<GridObj>();
     }
     void SpawnObj(GameObject obj,int row, int col, Objcolor color = Objcolor.NONE)
     {
+        if(panellist[row,col].Wall)
+        {
+            Debug.Log("Panel has Wall in: " + row +" " + col);
+            return;
+        }
         Vector3 newobjpos= panellist[row,col].transform.position;
         newobjpos.y +=.5f;
         GridObj newobj = Instantiate(obj, newobjpos, Quaternion.identity).GetComponent<GridObj>();
@@ -78,9 +104,17 @@ public List<GridObj> targets = new List<GridObj>();
         newobj.GridPosition = new Vector2(row,col); 
         panellist[row,col].SetItem(newobj);
     }
-    void CreateWalls()
+    void CreateWalls(int[,] positions)
     {
-        
+        for(int i =0;i <positions.GetLength(0);i++)
+        {
+            GridPanel CurPanel = panellist[positions[i,0],positions[i,1]];
+            
+            Vector3 newpos = CurPanel.transform.position;
+            newpos.y +=1;
+            Instantiate(Wall,newpos,Quaternion.identity);
+            CurPanel.Wall = true;
+        }
     }
     public GridPanel getNextPanel(int Row, int Col, Direction dir)
     {
@@ -102,11 +136,14 @@ public List<GridObj> targets = new List<GridObj>();
             Row++;
             break;
         }
+        return getPanel(Row,Col);
+    }
+    public GridPanel getPanel(int Row, int Col)
+    {
         if(Row < 0|| Col <0|| Row >= Rows|| Col >=Columns)
         return null;
         else
         return panellist[Row,Col];
-        
     }
     
     Direction MoveDirection(Vector3 Dir)
@@ -125,6 +162,19 @@ public List<GridObj> targets = new List<GridObj>();
 
         else 
         return Direction.INVALID; 
+
+    }
+    void Fase1(){
+        CreatePlaneArea(7,7);
+        int[,] poss = new int[,] {{0,0}};
+        CreateWalls(poss);
+        SpawnObj(Double, Rows/2, (int)Columns/2);
+        SpawnObj(Reflector, Rows-1, (int)Columns/2);
+        SpawnObj(Reflector, Rows-1, Columns-1);
+        SpawnObj(Glass, 0, (int)Columns/2);
+        SpawnObj(Target,(int)Rows/2 - 1,Columns -1,Objcolor.RED);
+        SpawnObj(Target,(int)Rows/2,Columns -1,Objcolor.GREEN);
+        SpawnObj(Target,(int)Rows/2 +1,Columns -1,Objcolor.BLUE);
 
     }
 }
