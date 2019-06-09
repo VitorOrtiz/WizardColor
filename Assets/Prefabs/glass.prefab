@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 1466cb35c305f5e468a7aed61839e7ea, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -105,9 +105,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanDrag: 1
-  LitUpRed: {fileID: 0}
-  LitUpGreen: {fileID: 0}
-  LitUpBlue: {fileID: 0}
   oColor: 3
   objtype: 2
   GridPosition: {x: 0, y: 0}
@@ -117,6 +114,11 @@ MonoBehaviour:
   RotDirection: {x: 0, y: 0, z: 0}
   Attatched: 0
   mat: {fileID: 5199550284645135863}
-  redMat: {fileID: 2100000, guid: a68be4169253c9345a37b4ae56a2ded0, type: 2}
-  GreenMat: {fileID: 2100000, guid: 035de9e3abf31d240afe49d0980614fa, type: 2}
-  BlueMat: {fileID: 2100000, guid: 9650bb81ef1536744b3e2d79a1e08b01, type: 2}
+  redMat: {r: 1, g: 0, b: 0, a: 1}
+  GreenMat: {r: 0, g: 1, b: 0, a: 1}
+  BlueMat: {r: 0, g: 0, b: 1, a: 1}
+  CyanMat: {r: 0, g: 1, b: 1, a: 1}
+  MagMat: {r: 1, g: 0, b: 1, a: 1}
+  YellowMat: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  defmaterial: {fileID: 2100000, guid: 31fe3c5d3411bf7499a59cc6ac757d4e, type: 2}
+  Litup: {fileID: 2100000, guid: fc847e162c9a44e4185f4bb5894e5150, type: 2}

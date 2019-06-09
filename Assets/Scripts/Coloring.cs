@@ -23,7 +23,7 @@ public class Coloring : MonoBehaviour
         {
             Vector2Int gridpos =new Vector2Int((int) player.CurPanel.position.x, (int)player.CurPanel.position.y);
             GridPanel panel = grid.thisgrid.getNextPanel(gridpos.x,gridpos.y,player.playerDirection);
-            if(panel.HasItem)
+            if(panel != null && panel.HasItem)
             {
                 if(panel.item.Cancolor)
                 {

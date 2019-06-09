@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Beam : MonoBehaviour
 {
-    public Gradient RedGradient,BlueGradient, GreenGradient;
+    public Gradient RedGradient,BlueGradient, GreenGradient, CyanGradient, MagGradient,YellowGradient;
     public LineRenderer line;
     private grid gridcontrol;
     
@@ -65,6 +65,7 @@ public class Beam : MonoBehaviour
     Vector3[] oldpos = new Vector3[CurrentLine.line.positionCount];
     
     CurrentLine.line.GetPositions(oldpos);
+    CurrentLine.points.Add(new GridValue{Row = CurRow,Col = CurCol});
     List<Vector3> positions = new List<Vector3>(oldpos);
     Openlines.Add(CurrentLine);
     AvailableLines.RemoveAt(0);
@@ -93,25 +94,29 @@ public class Beam : MonoBehaviour
                 case ObjType.DOUBLE:
                 
                 Direction newRaydir = Reflector.returnnewDoubleDirection(obj.item.DirRot,CurrentDir);
-               
-                if(newRaydir != Direction.INVALID){
-                    CurrentDir = newRaydir;
-                    CurrentLine.dir = CurrentDir;
-                }
-
-                lightBeamSeg newseg =new lightBeamSeg(AvailableLines[0], 
-                Reflector.ReturnReverseDirection(newRaydir));   
-                AvailableLines.RemoveAt(0);
-                Vector3 newraypos = obj.transform.position;
-                newraypos.y = CurrentLine.line.transform.position.y;
-                newseg.line.transform.position = newraypos;
-                newseg.line.colorGradient = SetLineColor(CurrentLine.lineColor);
-                Openlines.Add(newseg);
                 nextPos += new Vector3Int((int)obj.position.x- CurRow,0,(int)obj.position.y- CurCol);
                 AddPositiontoLine(CurrentLine.line,nextPos);
                 CurCol = (int)obj.position.y;
                 CurRow = (int)obj.position.x;
-                newseg.points.Add(new GridValue{Row = CurRow, Col = CurCol});
+                if(newRaydir != Direction.INVALID){
+                    CurrentDir = newRaydir;
+                    CurrentLine.dir = CurrentDir;
+                    lightBeamSeg newseg =new lightBeamSeg(AvailableLines[0], 
+                    Reflector.ReturnReverseDirection(newRaydir));   
+                    AvailableLines.RemoveAt(0);
+                    Vector3 newraypos = obj.transform.position;
+                    newraypos.y = CurrentLine.line.transform.position.y;
+                    newseg.line.transform.position = newraypos;
+                    newseg.line.colorGradient = SetLineColor(CurrentLine.lineColor);
+                    newseg.points.Add(new GridValue{Row = CurRow, Col = CurCol});
+                    Openlines.Add(newseg);
+                }
+                else
+                {
+                    Openlines.Remove(CurrentLine);
+                    newLines.Add(CurrentLine);
+                }
+             
                 break;
 
                 case ObjType.GLASS:
@@ -122,19 +127,17 @@ public class Beam : MonoBehaviour
                 newpos.y = CurrentLine.line.transform.position.y;
                 seg.line.transform.position = newpos;
                 nextPos += new Vector3Int((int)obj.position.x- CurRow,0,(int)obj.position.y- CurCol);
-                AddPositiontoLine(CurrentLine.line,nextPos);
-                seg.line.colorGradient = SetLineColor(obj.item.oColor);
-                seg.lineColor = obj.item.oColor;
+                AddPositiontoLine(CurrentLine.line,nextPos);   
+                Objcolor newcolor = mixColor(CurrentLine.lineColor,obj.item.oColor);
+                seg.line.colorGradient = SetLineColor(newcolor);
+                seg.lineColor = newcolor;
                 CurCol = (int)obj.position.y;
                 CurRow = (int)obj.position.x;
                 newLines.Add(CurrentLine);
                 Openlines.Remove(CurrentLine);
+                seg.points.Add(new GridValue{Row = CurRow, Col = CurCol});
+                if(CurrentLine.points[0].Row != CurRow || CurrentLine.points[0].Col != CurCol)
                 Openlines.Add(seg);
-                CurrentLine = seg;
-                nextPos = Vector3Int.zero;
-                oldpos = new Vector3[CurrentLine.line.positionCount];
-                CurrentLine.line.GetPositions(oldpos);
-                positions = new List<Vector3>(oldpos);
                 
                 break;
 
@@ -221,10 +224,46 @@ public class Beam : MonoBehaviour
         }
         return null;
     }
+    Objcolor mixColor(Objcolor curColor,Objcolor secondColor)
+    {
+        if(curColor == secondColor)
+        return curColor;
+        switch(curColor)
+        {
+            case Objcolor.RED:
+            if(secondColor == Objcolor.BLUE)
+                return Objcolor.MAGENTA;
+            else if(secondColor == Objcolor.GREEN)
+            return Objcolor.YELLOW;
+            else
+            return secondColor;
+    
+            case Objcolor.GREEN:
+             if(secondColor == Objcolor.BLUE)
+                return Objcolor.CYAN;
+            else if(secondColor == Objcolor.RED)
+            return Objcolor.YELLOW;
+             else
+            return secondColor;
+
+            case Objcolor.BLUE:
+             if(secondColor == Objcolor.RED)
+                return Objcolor.MAGENTA;
+            else if(secondColor == Objcolor.GREEN)
+            return Objcolor.CYAN;
+             else
+            return secondColor;
+        }
+        return secondColor;
+    }
     Gradient SetLineColor(Objcolor color){
         return color == Objcolor.RED? RedGradient:
                color == Objcolor.GREEN? GreenGradient: 
-               color == Objcolor.BLUE? BlueGradient:NewGradient;
+               color == Objcolor.BLUE? BlueGradient:
+               color == Objcolor.CYAN? CyanGradient:
+               color == Objcolor.MAGENTA? MagGradient:
+               color == Objcolor.YELLOW? YellowGradient:
+               NewGradient;
     }
 }
 [System.Serializable]

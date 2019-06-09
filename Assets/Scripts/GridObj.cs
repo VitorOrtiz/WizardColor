@@ -6,7 +6,7 @@ public class GridObj : MonoBehaviour
 {
     
     public bool CanDrag;
-    public Material LitUpRed,LitUpGreen,LitUpBlue;
+    
     public Objcolor oColor = Objcolor.NONE;
     public ObjType objtype;
     public Vector2 GridPosition;
@@ -22,70 +22,71 @@ public class GridObj : MonoBehaviour
 
     public MeshRenderer mat;
     private Material defmat;
-    public Material redMat,GreenMat,BlueMat;
+    public Color redMat = Color.red,
+    GreenMat =Color.green,
+    BlueMat = Color.blue,
+    CyanMat = Color.cyan,
+    MagMat = Color.magenta,
+    YellowMat = Color.yellow;
+    public Material defmaterial,Litup;
     // Start is called before the first frame update
       public void ChangeColor(Objcolor TarColor)
     {
-        
         switch(TarColor){
             case Objcolor.RED:
-            oColor = Objcolor.RED;
-            mat.material = redMat;
+            mat.material.color = redMat;
+            mat.material.SetColor("_EmissionColor",redMat);
             break;
+
             case Objcolor.GREEN:
-            oColor = Objcolor.GREEN;
-            mat.material = GreenMat;
+            mat.material.color = GreenMat;
+            mat.material.SetColor("_EmissionColor",GreenMat);
             break;
+
             case Objcolor.BLUE:
-            oColor = Objcolor.BLUE;
-            mat.material = BlueMat;
+            mat.material.color = BlueMat;
+            mat.material.SetColor("_EmissionColor",BlueMat);
             break;
+
+                case Objcolor.CYAN:
+            mat.material.color = CyanMat;
+            mat.material.SetColor("_EmissionColor",CyanMat);
+            break;
+
+                case Objcolor.MAGENTA:
+            mat.material.color = MagMat;
+            mat.material.SetColor("_EmissionColor",MagMat);
+            break;
+
+                case Objcolor.YELLOW:
+                mat.material.color = YellowMat;
+                mat.material.SetColor("_EmissionColor",YellowMat);
+            break;
+
             default:
-            oColor = Objcolor.NONE;
             mat.material = defmat;
+            mat.material.color = Color.white;
+            mat.material.SetColor("_EmissionColor",Color.white);
             break;
         }
         oColor = TarColor;
     }
     #endregion
-    
+
     public void LightUP(){
         if(objtype != ObjType.TARGET)
             return;
-        switch(oColor)
-        {
-            case Objcolor.RED:
-            mat.material = LitUpRed;
-            break;
-            case Objcolor.GREEN:
-            mat.material = LitUpGreen;
-            break;
-            case Objcolor.BLUE:
-            mat.material = LitUpBlue;
-            break;
-        }
-        
+        mat.material =Litup;
+        ChangeColor(oColor);
+        Debug.Log("gay");
         
     }
     
     public void LightDown(){
         if(objtype != ObjType.TARGET)
             return;
-        switch(oColor)
-        {
-            case Objcolor.RED:
-            mat.material = redMat;
-            break;
-            case Objcolor.GREEN:
-            mat.material = GreenMat;
-            break;
-            case Objcolor.BLUE:
-            mat.material =BlueMat;
-            break;
-            case Objcolor.NONE:
-            mat.material = defmat;
-            break;
-        }
+            mat.material = defmaterial;
+        ChangeColor(oColor);
         
     }
     void Start(){

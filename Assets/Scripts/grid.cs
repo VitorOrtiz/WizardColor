@@ -85,7 +85,7 @@ public List<GridObj> targets = new List<GridObj>();
             obj.LightDown();
         }
     }
-    void SpawnObj(GameObject obj,int row, int col, Objcolor color = Objcolor.NONE)
+    void SpawnObj(GameObject obj,int row, int col,bool CanDrag, Objcolor color = Objcolor.NONE)
     {
         if(panellist[row,col].Wall)
         {
@@ -101,6 +101,7 @@ public List<GridObj> targets = new List<GridObj>();
         if(color != Objcolor.NONE)
         newobj.ChangeColor(color);
         }
+        newobj.CanDrag = CanDrag;
         newobj.GridPosition = new Vector2(row,col); 
         panellist[row,col].SetItem(newobj);
     }
@@ -168,14 +169,18 @@ public List<GridObj> targets = new List<GridObj>();
         CreatePlaneArea(7,7);
         int[,] poss = new int[,] {{0,0}};
         CreateWalls(poss);
-        SpawnObj(Double, Rows/2, (int)Columns/2);
-        SpawnObj(Reflector, Rows-1, (int)Columns/2);
-        SpawnObj(Reflector, Rows-1, Columns-1);
-        SpawnObj(Glass, 0, (int)Columns/2);
-        SpawnObj(Target,(int)Rows/2 - 1,Columns -1,Objcolor.RED);
-        SpawnObj(Target,(int)Rows/2,Columns -1,Objcolor.GREEN);
-        SpawnObj(Target,(int)Rows/2 +1,Columns -1,Objcolor.BLUE);
-
+        SpawnObj(Double, Rows/2,Columns/2,true);
+        SpawnObj(Reflector, Rows-1, Columns/2,true);
+        SpawnObj(Reflector, Rows-1, Columns-1,true);
+        SpawnObj(Glass, 0, Columns/2,true);
+        SpawnObj(Glass, 0, Columns/2 + 1,true);
+        SpawnObj(Target,0,Columns -1,false,Objcolor.RED);
+        SpawnObj(Target,1,Columns -1,false,Objcolor.YELLOW);
+        SpawnObj(Target,2,Columns -1,false,Objcolor.GREEN);
+        SpawnObj(Target,4,Columns -1,false,Objcolor.CYAN);
+        SpawnObj(Target,5,Columns -1,false,Objcolor.BLUE);
+        SpawnObj(Target,6,Columns -1,false,Objcolor.MAGENTA);
+        
     }
 }
 public enum Direction{

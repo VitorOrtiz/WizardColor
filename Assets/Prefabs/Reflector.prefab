@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8207933559335954866}
   - component: {fileID: 7887405046080534877}
-  - component: {fileID: 776925994857922109}
+  - component: {fileID: 2727338803677280516}
   m_Layer: 0
   m_Name: Reflector
   m_TagString: Untagged
@@ -46,7 +46,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &776925994857922109
+--- !u!114 &2727338803677280516
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -59,10 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanDrag: 1
-  LitUpRed: {fileID: 0}
-  LitUpGreen: {fileID: 0}
-  LitUpBlue: {fileID: 0}
-  oColor: 3
+  oColor: 6
   objtype: 0
   GridPosition: {x: 0, y: 0}
   Cancolor: 0
@@ -71,9 +68,14 @@ MonoBehaviour:
   RotDirection: {x: 0, y: 0, z: 0}
   Attatched: 0
   mat: {fileID: 847589987361598510}
-  redMat: {fileID: 2100000, guid: a68be4169253c9345a37b4ae56a2ded0, type: 2}
-  GreenMat: {fileID: 2100000, guid: 035de9e3abf31d240afe49d0980614fa, type: 2}
-  BlueMat: {fileID: 2100000, guid: 9650bb81ef1536744b3e2d79a1e08b01, type: 2}
+  redMat: {r: 1, g: 0, b: 0, a: 1}
+  GreenMat: {r: 0, g: 1, b: 0, a: 1}
+  BlueMat: {r: 0, g: 0, b: 1, a: 1}
+  CyanMat: {r: 0, g: 1, b: 1, a: 1}
+  MagMat: {r: 1, g: 0, b: 1, a: 1}
+  YellowMat: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  defmaterial: {fileID: 2100000, guid: 31fe3c5d3411bf7499a59cc6ac757d4e, type: 2}
+  Litup: {fileID: 2100000, guid: fc847e162c9a44e4185f4bb5894e5150, type: 2}
 --- !u!1001 &847589987363763278
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -85,9 +87,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: 3DTriangle
       objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 9c913fdaedab0484db26bb7c0def173d, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1466cb35c305f5e468a7aed61839e7ea, type: 2}
     - target: {fileID: 400000, guid: 9c913fdaedab0484db26bb7c0def173d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0
+      value: -0.2
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 9c913fdaedab0484db26bb7c0def173d, type: 3}
       propertyPath: m_LocalPosition.y

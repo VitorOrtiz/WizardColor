@@ -230,7 +230,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 1466cb35c305f5e468a7aed61839e7ea, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -575,9 +575,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanDrag: 1
-  LitUpRed: {fileID: 0}
-  LitUpGreen: {fileID: 0}
-  LitUpBlue: {fileID: 0}
   oColor: 3
   objtype: 5
   GridPosition: {x: 0, y: 0}
@@ -587,9 +584,14 @@ MonoBehaviour:
   RotDirection: {x: 0, y: 0, z: 0}
   Attatched: 0
   mat: {fileID: 0}
-  redMat: {fileID: 0}
-  GreenMat: {fileID: 0}
-  BlueMat: {fileID: 0}
+  redMat: {r: 0, g: 0, b: 0, a: 0}
+  GreenMat: {r: 0, g: 0, b: 0, a: 0}
+  BlueMat: {r: 0, g: 0, b: 0, a: 0}
+  CyanMat: {r: 0, g: 0, b: 0, a: 0}
+  MagMat: {r: 0, g: 0, b: 0, a: 0}
+  YellowMat: {r: 0, g: 0, b: 0, a: 0}
+  defmaterial: {fileID: 0}
+  Litup: {fileID: 0}
   beam: {fileID: 700257702}
   InGrid: 0
   FiringPoint: {fileID: 1211307895}
@@ -667,6 +669,93 @@ MonoBehaviour:
     serializedVersion: 2
     key0: {r: 0, g: 1, b: 0, a: 0.64705884}
     key1: {r: 0, g: 1, b: 0, a: 0.64705884}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  CyanGradient:
+    serializedVersion: 2
+    key0: {r: 0, g: 1, b: 1, a: 0.64705884}
+    key1: {r: 0, g: 1, b: 1, a: 0.64705884}
+    key2: {r: 0, g: 0, b: 0, a: 1}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 65535
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  MagGradient:
+    serializedVersion: 2
+    key0: {r: 1, g: 0, b: 1, a: 0.64705884}
+    key1: {r: 1, g: 0, b: 1, a: 0.64705884}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 193
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  YellowGradient:
+    serializedVersion: 2
+    key0: {r: 1, g: 1, b: 0, a: 0.64705884}
+    key1: {r: 1, g: 1, b: 0, a: 0.64705884}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
@@ -857,7 +946,7 @@ MonoBehaviour:
     AttatchedObj: {fileID: 0}
     inPosition: 0
   CurPanel: {fileID: 0}
-  MoveSpeed: 3
+  MoveSpeed: 4
   InitialLookDirection: {x: 0, y: 0, z: 1}
 --- !u!114 &821966102
 MonoBehaviour:
@@ -1461,7 +1550,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 1466cb35c305f5e468a7aed61839e7ea, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

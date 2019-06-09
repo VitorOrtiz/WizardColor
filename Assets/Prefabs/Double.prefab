@@ -88,7 +88,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9c913fdaedab0484db26bb7c0def173d, type: 3}
+  - {fileID: 2100000, guid: 1466cb35c305f5e468a7aed61839e7ea, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -174,7 +174,7 @@ MonoBehaviour:
   objtype: 1
   GridPosition: {x: 0, y: 0}
   Cancolor: 0
-  DirRot: 3
+  DirRot: 0
   idRotation: 0
   RotDirection: {x: 0, y: 0, z: 0}
   Attatched: 0
