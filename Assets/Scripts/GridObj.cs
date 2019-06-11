@@ -6,7 +6,7 @@ public class GridObj : MonoBehaviour
 {
     
     public bool CanDrag;
-    
+    public bool CanWalkThrough = false;
     public Objcolor oColor = Objcolor.NONE;
     public ObjType objtype;
     public Vector2 GridPosition;
@@ -172,6 +172,9 @@ public class GridObj : MonoBehaviour
         return Direction.INVALID; 
 
     }
+    public virtual void Fase(){
+
+    }
 } 
 public enum Objcolor{
         GREEN,
@@ -190,5 +193,6 @@ public enum Objcolor{
         GLASS,
         WALL,
         TARGET,
+        PRESSURE,
         OTHER
     }

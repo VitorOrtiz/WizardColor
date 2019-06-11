@@ -76,7 +76,7 @@ public class Player : MonoBehaviour
                     int Row = (int)(CurPanel.position.x + EulerRotation.x);
                     int Col = (int)(CurPanel.position.y + EulerRotation.z);
                     GridPanel targetPanel = grid.thisgrid.getPanel(Row,Col);
-                    if(targetPanel.HasItem|| targetPanel.Wall|| targetPanel == null)
+                    if(targetPanel.HasItem && targetPanel.item.objtype != ObjType.PRESSURE|| targetPanel.Wall|| targetPanel == null)
                     return;
                     DroppingStaff = true;
                     
@@ -196,7 +196,7 @@ public class Player : MonoBehaviour
         Vector3 targetpos = targetPanel.transform.position;
         targetpos.y = transform.position.y;
         
-        yield return new WaitForSeconds(.01f);
+       // yield return new WaitForSeconds(.01f);
         grid.thisgrid.panellist[(int)Att.AttatchedObj.GridPosition.x,
                 (int)Att.AttatchedObj.GridPosition.y].RemoveItem();
         
@@ -206,6 +206,7 @@ public class Player : MonoBehaviour
         Att.AttatchedObj.SetPosition(objtargetpos,ObjTargetPanel.position);
         CheckPanelPos();
         CurPanel = targetPanel;
+        yield return null;
 
     }
     void Attatch()

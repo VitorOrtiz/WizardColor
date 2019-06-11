@@ -21,6 +21,7 @@ public class Beam : MonoBehaviour
      gridcontrol = grid.thisgrid;   
      for(int i = 0;i < 10;i++){
         AvailableLines.Add(Instantiate(line));
+
         //AvailableLines[i].gameObject.SetActive(false);
 
         }
@@ -158,6 +159,10 @@ public class Beam : MonoBehaviour
                 break;
 
                 case ObjType.OTHER:
+                break;
+                case ObjType.PRESSURE:
+                CurCol = (int)obj.position.y;
+                CurRow = (int)obj.position.x;
                 break;
                 
             }

@@ -575,8 +575,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanDrag: 1
+  CanWalkThrough: 0
   oColor: 3
-  objtype: 5
+  objtype: 6
   GridPosition: {x: 0, y: 0}
   Cancolor: 0
   DirRot: 0
@@ -1615,11 +1616,13 @@ MonoBehaviour:
   newLevel: {fileID: 0}
   Wall: {fileID: 5660905009353912180, guid: 2c2e380c32098d740a7ba7532dcf667f, type: 3}
   obj: {fileID: 4870722507177067199, guid: 7e28f4f94b668a640b9d7cc81fccdb5b, type: 3}
-  Reflector: {fileID: 4870722507177067199, guid: 5d595f95a738d0c4b84f7c05847bc99c,
+  Reflector: {fileID: 2727338803677280516, guid: 5d595f95a738d0c4b84f7c05847bc99c,
     type: 3}
-  Glass: {fileID: 7025114887428010995, guid: 14fd6c478380bc54f8634fc3a395ee67, type: 3}
-  Target: {fileID: 4621790808233889808, guid: e480e13c2c1b8af42933e3a27618da00, type: 3}
-  Double: {fileID: 8879878001783837219, guid: 5371177474848894eb48531b37ba0303, type: 3}
+  Glass: {fileID: 3517958881116665174, guid: 14fd6c478380bc54f8634fc3a395ee67, type: 3}
+  Target: {fileID: 8051411530302349453, guid: e480e13c2c1b8af42933e3a27618da00, type: 3}
+  Double: {fileID: 982192957691280589, guid: 5371177474848894eb48531b37ba0303, type: 3}
+  Pressure: {fileID: 5732587669268748448, guid: 51466fd36af0aa9488d32f6de333e62d,
+    type: 3}
   targets: []
 --- !u!4 &1808911891
 Transform:

@@ -19,10 +19,11 @@ public class grid : MonoBehaviour
 #region GridObjects
 public GameObject Wall;
 public GameObject obj;
-public GameObject Reflector;
-public GameObject Glass;
-public GameObject Target;
-public GameObject Double;
+public GridObj Reflector;
+public GridObj Glass;
+public GridObj Target;
+public GridObj Double;
+public Pressure Pressure;
 public static grid thisgrid;
 
 public List<GridObj> targets = new List<GridObj>();
@@ -85,16 +86,16 @@ public List<GridObj> targets = new List<GridObj>();
             obj.LightDown();
         }
     }
-    void SpawnObj(GameObject obj,int row, int col,bool CanDrag, Objcolor color = Objcolor.NONE)
+    GridObj SpawnObj(GridObj obj,int row, int col,bool CanDrag, Objcolor color = Objcolor.NONE)
     {
         if(panellist[row,col].Wall)
         {
             Debug.Log("Panel has Wall in: " + row +" " + col);
-            return;
+            return null;
         }
         Vector3 newobjpos= panellist[row,col].transform.position;
         newobjpos.y +=.5f;
-        GridObj newobj = Instantiate(obj, newobjpos, Quaternion.identity).GetComponent<GridObj>();
+        GridObj newobj = Instantiate(obj, newobjpos, Quaternion.identity);
         if(newobj.objtype == ObjType.TARGET)
         {
         targets.Add(newobj);
@@ -104,18 +105,45 @@ public List<GridObj> targets = new List<GridObj>();
         newobj.CanDrag = CanDrag;
         newobj.GridPosition = new Vector2(row,col); 
         panellist[row,col].SetItem(newobj);
+        return newobj;
+        }
+    void CreatePressure(int Row, int Col,GridObj objtoCreate,int objRow,int objCol, GameObject Wall = null)
+    {
+        if(panellist[Row,Col].Wall)
+        {
+            Debug.Log("Panel has Wall in: " + Row +" " + Col);
+            return;
+        }
+         Vector3 newobjpos= panellist[Row,Col].transform.position;
+        newobjpos.y +=.05f;
+        Pressure newobj = Instantiate(Pressure, newobjpos, Quaternion.identity);
+        if(Wall !=null){
+            newobj.targetobj = SpawnWall(objRow,objCol);
+        }
+        else{
+            newobj.targetobj = SpawnObj(objtoCreate,objRow,objCol,false).gameObject;
+        }
+        newobj.GridPosition = new Vector2(Row,Col); 
+        newobj.curpanel = panellist[Row,Col];
+        newobj.targetobjpanel = panellist[objRow,objCol];
+        newobj.Fase(false);
+        panellist[Row,Col].HasPressure =true;
     }
     void CreateWalls(int[,] positions)
     {
         for(int i =0;i <positions.GetLength(0);i++)
         {
-            GridPanel CurPanel = panellist[positions[i,0],positions[i,1]];
-            
-            Vector3 newpos = CurPanel.transform.position;
-            newpos.y +=1;
-            Instantiate(Wall,newpos,Quaternion.identity);
-            CurPanel.Wall = true;
+            SpawnWall(positions[i,0],positions[i,1]);
         }
+    }
+    GameObject SpawnWall(int Row,int Col)
+    {
+        GridPanel CurPanel = panellist[Row,Col];
+        
+        Vector3 newpos = CurPanel.transform.position;
+        newpos.y +=1;
+        CurPanel.Wall = true;
+        return Instantiate(Wall,newpos,Quaternion.identity);
     }
     public GridPanel getNextPanel(int Row, int Col, Direction dir)
     {
@@ -180,7 +208,7 @@ public List<GridObj> targets = new List<GridObj>();
         SpawnObj(Target,4,Columns -1,false,Objcolor.CYAN);
         SpawnObj(Target,5,Columns -1,false,Objcolor.BLUE);
         SpawnObj(Target,6,Columns -1,false,Objcolor.MAGENTA);
-        
+        CreatePressure(2,1,Glass,6,0);
     }
 }
 public enum Direction{

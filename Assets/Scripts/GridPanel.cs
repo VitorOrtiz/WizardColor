@@ -6,6 +6,8 @@ public class GridPanel : MonoBehaviour
 {
     public bool Wall;
     public bool HasItem;
+    public bool HasPlayer;
+    public bool HasPressure =false;
     public GridObj item;
     public Vector2 position;
     public float size;
@@ -25,6 +27,7 @@ public class GridPanel : MonoBehaviour
     }
     public void SetItem(GridObj Item)
     {
+        if(Item.objtype !=ObjType.PRESSURE)
         HasItem = true;
         item = Item;
     }
@@ -39,11 +42,13 @@ public class GridPanel : MonoBehaviour
         {
             CurColor.material = highlightMat;
             ColorChoice = 1;
+            HasPlayer = true;
         }
         else
         {
             CurColor.material = defaultMat;
             ColorChoice = 0;
+            HasPlayer = false;
         }
 
     }
