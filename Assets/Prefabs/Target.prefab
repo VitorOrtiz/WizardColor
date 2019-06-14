@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 941416315722733946}
   - component: {fileID: 7396786911909844815}
-  - component: {fileID: 8051411530302349453}
+  - component: {fileID: 1333132200303116708}
   m_Layer: 0
   m_Name: Target
   m_TagString: Untagged
@@ -47,7 +47,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 2, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8051411530302349453
+--- !u!114 &1333132200303116708
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -56,12 +56,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 4621790808233889808}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f29c080ec96fbd84b9073c751eb3d44a, type: 3}
+  m_Script: {fileID: 11500000, guid: 6f6dda18a5d285b41b466b2a64d8f8c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   CanDrag: 0
   CanWalkThrough: 0
-  oColor: 0
+  oColor: 6
   objtype: 4
   GridPosition: {x: 0, y: 0}
   Cancolor: 0
@@ -70,14 +70,16 @@ MonoBehaviour:
   RotDirection: {x: 0, y: 0, z: 0}
   Attatched: 0
   mat: {fileID: 8816877506237457914}
-  redMat: {r: 0.7169812, g: 0.21306516, b: 0.21306516, a: 0}
-  GreenMat: {r: 0.26855642, g: 0.6698113, b: 0.26855642, a: 0}
-  BlueMat: {r: 0.1954432, g: 0.1954432, b: 0.6792453, a: 0}
-  CyanMat: {r: 0.20790316, g: 0.6037736, b: 0.6037736, a: 0}
-  MagMat: {r: 0.5943396, g: 0.21586862, b: 0.5943396, a: 0}
-  YellowMat: {r: 0.6698113, g: 0.6698113, b: 0.21800463, a: 0}
+  redMat: {r: 0.754717, g: 0.13883947, b: 0.13883947, a: 1}
+  GreenMat: {r: 0.16353686, g: 0.7075472, b: 0.16353686, a: 1}
+  BlueMat: {r: 0.21115166, g: 0.21115166, b: 0.6886792, a: 1}
+  CyanMat: {r: 0.21003917, g: 0.754717, b: 0.754717, a: 1}
+  MagMat: {r: 0.6792453, g: 0.20825918, b: 0.6792453, a: 1}
+  YellowMat: {r: 0.7075472, g: 0.66632724, b: 0.19023673, a: 1}
   defmaterial: {fileID: 2100000, guid: 31fe3c5d3411bf7499a59cc6ac757d4e, type: 2}
   Litup: {fileID: 2100000, guid: fc847e162c9a44e4185f4bb5894e5150, type: 2}
+  BeamHit: 0
+  ActiveParticles: {fileID: 6326912930140207599}
 --- !u!1 &5995518316295959010
 GameObject:
   m_ObjectHideFlags: 0
@@ -377,7 +379,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
+      maxColor: {r: 1, g: 1, b: 1, a: 0.34901962}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -820,7 +822,7 @@ ParticleSystem:
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
     donutRadius: 0.2
-    m_Position: {x: 0, y: -1, z: 0}
+    m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: -90, y: 0, z: 0}
     m_Scale: {x: 1, y: 1, z: 1}
     placementMode: 0
@@ -901,7 +903,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.9
+      value: 0.4
       mode: 0
       spread: 0
       speed:
@@ -1020,7 +1022,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 10
+      scalar: 15
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -1458,9 +1460,9 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 1, b: 1, a: 1}
+        key0: {r: 1, g: 1, b: 1, a: 0}
         key1: {r: 1, g: 1, b: 1, a: 1}
-        key2: {r: 0, g: 0, b: 0, a: 0}
+        key2: {r: 0, g: 0, b: 0, a: 1}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
@@ -1475,16 +1477,16 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 52621
-        atime2: 65535
-        atime3: 0
+        atime1: 15227
+        atime2: 46260
+        atime3: 65535
         atime4: 0
         atime5: 0
         atime6: 0
         atime7: 0
         m_Mode: 0
         m_NumColorKeys: 2
-        m_NumAlphaKeys: 3
+        m_NumAlphaKeys: 4
       minGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -2727,7 +2729,7 @@ ParticleSystem:
     strength:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.04
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -2884,7 +2886,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     separateAxes: 0
-    frequency: 0.5
+    frequency: 1.58
     damping: 1
     octaves: 1
     octaveMultiplier: 0.5
@@ -4833,7 +4835,7 @@ ParticleSystemRenderer:
   m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0
-  m_MaxParticleSize: 0.5
+  m_MaxParticleSize: 0.1
   m_CameraVelocityScale: 0
   m_VelocityScale: 0
   m_LengthScale: 2

@@ -29,23 +29,33 @@ public class Staff : GridObj
     if(InGrid){
         Rotate();   
         if(Input.GetKeyDown(KeyCode.F1)){
-        Firing = true;
-        beam.CBeam(panel,MoveDirection(RotDirection),FiringPoint.position);
+        Activate();
         }
         if(panel.position != GridPosition)
         panel = grid.thisgrid.panellist[(int)GridPosition.x,(int)GridPosition.y];   
 
         }
         if(Attatched && Firing){
-         beam.ResetCounters();
-         Firing = false;
+            Reset();
+        }
+        if(!Attatched && Input.GetKeyDown(KeyCode.Space))
+        {
+            if(Firing)
+            Activate();
+            else
+            Reset();
         }
         
         
     }
+    void Reset(){
+        beam.ResetCounters();
+         Firing = false;
+    }
     public void Activate()
     {
-        
+        Firing = true;
+        beam.CBeam(panel,MoveDirection(RotDirection),FiringPoint.position);
     }
     public void DropStaff(GridPanel TargetPanel)
     {
@@ -65,6 +75,7 @@ public class Staff : GridObj
         transform.localRotation = HoldingRotation;
         transform.localPosition = HoldingPosition;
         InGrid = false;
+        Attatched = false;
         beam.ResetCounters();
         panel.RemoveItem();
         panel = null;

@@ -29,6 +29,8 @@ public class GridPanel : MonoBehaviour
     {
         if(Item.objtype !=ObjType.PRESSURE)
         HasItem = true;
+        if(Item.objtype == ObjType.WALL)
+        Wall = true;
         item = Item;
     }
     public void RemoveItem(){

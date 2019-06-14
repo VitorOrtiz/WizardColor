@@ -108,6 +108,7 @@ public class Beam : MonoBehaviour
                     Vector3 newraypos = obj.transform.position;
                     newraypos.y = CurrentLine.line.transform.position.y;
                     newseg.line.transform.position = newraypos;
+                    newseg.lineColor = CurrentLine.lineColor;
                     newseg.line.colorGradient = SetLineColor(CurrentLine.lineColor);
                     newseg.points.Add(new GridValue{Row = CurRow, Col = CurCol});
                     Openlines.Add(newseg);

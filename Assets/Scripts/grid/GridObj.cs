@@ -73,7 +73,16 @@ public class GridObj : MonoBehaviour
     }
     #endregion
 
-    public void LightUP(){
+    #region Target
+    public virtual void LightUP(){
+        LightUp();
+    }
+    public virtual void LightDOWN()
+    {
+        LightDown();
+    }
+    #endregion
+    public void LightUp(){
         if(objtype != ObjType.TARGET)
             return;
         mat.material =Litup;
@@ -98,6 +107,7 @@ public class GridObj : MonoBehaviour
     
     void Update()
     {
+        if(CanDrag)
         Rotate();
     }
     public void Rotate()
