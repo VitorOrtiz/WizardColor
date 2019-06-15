@@ -7,9 +7,16 @@ public class Coloring : MonoBehaviour
 {
     public Image RedImage,BlueImage,Greenimage;
     private Image SelectedImage;
-    Objcolor CurColor;
+    public Objcolor CurColor;
     float defSize;
+    public bool CurColoring;
     Player player;
+    #region  singleton
+    public static Coloring coloring;
+    void Awake(){
+        coloring = this;
+    }
+    #endregion
     // Start is called before the first frame update
     void Start()
     {
@@ -28,24 +35,32 @@ public class Coloring : MonoBehaviour
                 if(panel.item.Cancolor)
                 {
                     panel.item.ChangeColor(CurColor);
+                    if(panel.item.objtype == ObjType.GLASS)
+                        Player.player.playerStaff.RedoBeam();
+                    CurColoring =true;
+                    Invoke("Paint",.2f);
                 }
             }
         }
-        else if(Input.GetKeyDown(KeyCode.F2))
+        else if(Input.GetKeyDown(KeyCode.Alpha1))
         {
             SelectColor(Objcolor.RED,RedImage);
         }
-        else if(Input.GetKeyDown(KeyCode.F3)){
+        else if(Input.GetKeyDown(KeyCode.Alpha2)){
             
             SelectColor(Objcolor.GREEN,Greenimage);
         }
-        else if(Input.GetKeyDown(KeyCode.F4)){
+        else if(Input.GetKeyDown(KeyCode.Alpha3)){
             
             SelectColor(Objcolor.BLUE,BlueImage);
         }
-        else if(Input.GetKeyDown(KeyCode.F5)){
+        else if(Input.GetKeyDown(KeyCode.Alpha4)){
             SelectColor(Objcolor.NONE, null);
         }
+    }
+    void Paint()
+    {
+        CurColoring = false;
     }
     void SelectColor(Objcolor color, Image SelectedImage)
     {

@@ -9,12 +9,12 @@ public class Player : MonoBehaviour
 
     #region GridControl
     public Attatchment Att;
-    private enum MoveState{
+    public enum MoveState{
         FreeWalk,
         Attatched
     }
     private bool AttMoving;
-    private MoveState state = MoveState.FreeWalk;
+    public MoveState state = MoveState.FreeWalk;
     public GridPanel CurPanel;
     #endregion
     #region FreeControl
@@ -76,7 +76,7 @@ public class Player : MonoBehaviour
                     int Row = (int)(CurPanel.position.x + EulerRotation.x);
                     int Col = (int)(CurPanel.position.y + EulerRotation.z);
                     GridPanel targetPanel = grid.thisgrid.getPanel(Row,Col);
-                    if(targetPanel.HasItem && targetPanel.item.objtype != ObjType.PRESSURE|| targetPanel.Wall|| targetPanel == null)
+                    if( targetPanel == null ||targetPanel.HasItem && targetPanel.item.objtype != ObjType.PRESSURE|| targetPanel.Wall)
                     return;
                     DroppingStaff = true;
                     
@@ -160,7 +160,7 @@ public class Player : MonoBehaviour
     {
         AttMoving = true;
         Vector3 PlayerInput = new Vector3(PlayerInputHor,0,PlayerInputVer);
-        if(MoveDirection(PlayerInput) == Direction.INVALID){
+        if(MoveDirection(PlayerInput) == Direction.INVALID ||state == MoveState.FreeWalk){
             CancelInvoke("MoveOnGrid");
             AttMoving = false;
         }
@@ -181,8 +181,8 @@ public class Player : MonoBehaviour
         return;
         GridPanel targetPanel, ObjTargetPanel;
         
-        targetPanel = grid.thisgrid.panellist[Row,Col];
-        ObjTargetPanel = grid.thisgrid.panellist[ObjRow,ObjCol];
+        targetPanel = grid.thisgrid.getPanel(Row,Col);
+        ObjTargetPanel = grid.thisgrid.getPanel(ObjRow,ObjCol);
         if(targetPanel.HasItem || targetPanel.Wall || ObjTargetPanel.HasItem|| ObjTargetPanel.Wall)
         return;
 
@@ -217,8 +217,8 @@ public class Player : MonoBehaviour
             if(MoveDirection(EulerRotation) != Direction.INVALID){
             int row = (int)(CurPanelindex.x +EulerRotation.x);// pega o proximo baseado na direçao
             int col = (int)(CurPanelindex.y + EulerRotation.z);//que o jogador esta olhando
-            GridPanel targetPanel = grid.thisgrid.panellist[row,col];
-
+            GridPanel targetPanel = grid.thisgrid.getPanel(row,col);
+            if(targetPanel != null)
                 if(targetPanel.HasItem){// se o proximo tiver um objeto
                     if(!targetPanel.item.CanDrag)
                     return;

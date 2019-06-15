@@ -39,11 +39,11 @@ public List<GridObj> targets = new List<GridObj>();
     {   
         Fase1();
     }
-    public void CreateLevel(string levelId)
+    public void CreateLevel(int levelId)
     {
         GameObject.Destroy(newLevel);
         targets.Clear();
-        Invoke(levelId,0);
+        Invoke("Fase"+ levelId.ToString(),0);
     }
     void CreatePlaneArea(int Rows,int Columns)
     {
@@ -85,6 +85,16 @@ public List<GridObj> targets = new List<GridObj>();
         }
         
 
+    }
+    public void CheckWin()
+    {
+        int activeTargets = 0;
+        foreach(GridObj target in targets)
+        if(target.BeamHit)
+        activeTargets++;
+        if(activeTargets == targets.Count)
+        GameController.controller.Win();
+        
     }
     public void ResetTargets()
     {

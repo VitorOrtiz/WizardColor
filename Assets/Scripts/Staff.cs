@@ -14,6 +14,7 @@ public class Staff : GridObj
 
     GridPanel panel;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,25 +29,26 @@ public class Staff : GridObj
     {
     if(InGrid){
         Rotate();   
-        if(Input.GetKeyDown(KeyCode.F1)){
-        Activate();
-        }
+      
         if(panel.position != GridPosition)
-        panel = grid.thisgrid.panellist[(int)GridPosition.x,(int)GridPosition.y];   
+            panel = grid.thisgrid.panellist[(int)GridPosition.x,(int)GridPosition.y];   
 
-        }
-        if(Attatched && Firing){
+        
+        if((Attatched && Firing) || (Player.player.state == Player.MoveState.Attatched && Firing)){
             Reset();
-        }
-        if(!Attatched && Input.GetKeyDown(KeyCode.Space))
-        {
-            if(Firing)
+            }
+        else if(!Attatched && !Firing)
+            {
             Activate();
-            else
-            Reset();
+            }
         }
         
         
+    }
+    public void RedoBeam()
+    {
+        if(InGrid && !Attatched && Firing)
+        Activate();
     }
     void Reset(){
         beam.ResetCounters();
@@ -62,6 +64,7 @@ public class Staff : GridObj
         if(InGrid)
         return;
         InGrid = true;
+        Attatched = true;
         transform.rotation = GridRotation;
         transform.position = TargetPanel.transform.position;
         GridPosition = TargetPanel.position;   

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Target : GridObj
 {
-    public bool BeamHit;
+    
     public ParticleSystem ActiveParticles;
     // Start is called before the first frame update
     void Start()
@@ -20,6 +20,7 @@ public class Target : GridObj
        ActiveParticles.gameObject.SetActive(true);
        ActiveParticles.Play();
        BeamHit = true;
+       grid.thisgrid.CheckWin();
    }
    public override void LightDOWN(){
        LightDown();

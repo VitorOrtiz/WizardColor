@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class TutorialObj : MonoBehaviour
+public class TutorialObjKey : MonoBehaviour
 {
     public Color DefaultColor;
     public Color HighLightColor;

@@ -19,7 +19,7 @@ public class GridObj : MonoBehaviour
 
     private bool lightUp;
     #region Glass
-
+    public bool BeamHit;
     public MeshRenderer mat;
     private Material defmat;
     public Color redMat = Color.red,
