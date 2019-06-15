@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class Tutorial : MonoBehaviour
 {
+    public int Id;
     public GameObject[] objects;
     public Sprite[] Images;
     public Image TutImage;
@@ -16,13 +17,25 @@ public class Tutorial : MonoBehaviour
     {
         language = GameController.controller.language;
         //SetText(0);
-        StartCoroutine(Tutorial1());
+        StartTutorial(Id);
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+    public void StartTutorial(int id)
+    {
+        switch(id)
+        {
+            case 1:
+            StartCoroutine(Tutorial1());
+            break;
+            case 2:
+            StartCoroutine(Tutorial2());
+            break;
+        }
     }
     string GetText(int i)
     {
@@ -36,6 +49,10 @@ public class Tutorial : MonoBehaviour
             return tut.en_USText[i];
         }
         return "";
+    }
+    IEnumerator Tutorial2()
+    {
+        yield return null;
     }
     IEnumerator Tutorial1()
     {

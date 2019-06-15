@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class grid : MonoBehaviour
 {
+    public Canvas canvas;
+    public Tutorial[] tutorials;
     #region GridInfo
     public int Rows;
     public int Columns;
@@ -216,6 +218,7 @@ public List<GridObj> targets = new List<GridObj>();
 		CreatePlaneArea(7, 5);
 		SpawnObj(Target, 4, 2, false, Objcolor.RED);
 		SpawnObj(Glass, 1, 2, true);
+        Instantiate(tutorials[0],canvas.transform);
 	}
     void Fase101(){
         CreatePlaneArea(7,7);
