@@ -10,10 +10,7 @@ public class Target : GridObj
     void Start()
     {
         var main = ActiveParticles.main;
-        main.startColor = oColor == Objcolor.BLUE? 
-        Color.blue:oColor == Objcolor.RED?Color.red: oColor == Objcolor.GREEN?Color.green:
-        oColor == Objcolor.CYAN?Color.cyan:oColor == Objcolor.MAGENTA?Color.magenta:
-        oColor == Objcolor.YELLOW?Color.yellow:ActiveParticles.main.startColor;
+        main.startColor = GetColor();
     }
    public override void LightUP(){
        LightUp();

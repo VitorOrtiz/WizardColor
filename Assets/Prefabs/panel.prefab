@@ -105,6 +105,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9dad2b86c0764a42bf2c00e5c9ed828, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Wall: 0
+  HasItem: 0
+  HasPlayer: 0
+  CanDragOver: 1
+  HasPressure: 0
+  item: {fileID: 0}
   position: {x: 0, y: 0}
   size: 0
   highlightMat: {fileID: 2100000, guid: 29a3e92636eece94f94b19d10013414f, type: 2}

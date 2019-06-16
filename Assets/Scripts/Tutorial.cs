@@ -23,7 +23,8 @@ public class Tutorial : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(GameController.controller.WinStatus)
+        Destroy(gameObject);
     }
     public void StartTutorial(int id)
     {
@@ -52,7 +53,79 @@ public class Tutorial : MonoBehaviour
     }
     IEnumerator Tutorial2()
     {
-        yield return null;
+        
+        //Parte 1 Piso de pressao
+        TutText.text =GetText(0);//isto é um piso de pressão
+        TutImage.sprite = Images[0];
+        StartCoroutine(Fade(TextAlpha,0,1,.1f));
+        yield return new WaitForSeconds(4);
+         StartCoroutine(Fade(TextAlpha,1,0,.1f));
+        yield return new WaitForSeconds(.4f);
+        TutImage.gameObject.SetActive(false);
+        TutText.text = GetText(1); //ele ativa e desativa objetos karaio
+        yield return new WaitForSeconds(.1f);
+        StartCoroutine(Fade(TextAlpha,0,1,.1f));
+        yield return new WaitForSeconds(4);
+         StartCoroutine(Fade(TextAlpha,1,0,.1f));
+        yield return new WaitForSeconds(.4f);
+        
+        TutText.text = GetText(2);//pise nele.
+        yield return new WaitForSeconds(.1f);
+        StartCoroutine(Fade(TextAlpha,0,1,.1f));
+        bool Steppedon = false;
+        while(!Steppedon)
+        {
+            if(grid.thisgrid.LevelPressure.active)
+            Steppedon = true;
+            yield return null;
+        }
+        StartCoroutine(Fade(TextAlpha,1,0,.1f));
+        yield return new WaitForSeconds(.4f);
+        TutText.text = GetText(3);//enquanto você ou um objeto estiver em cima, ele ficará ativo.
+        yield return new WaitForSeconds(.1f);
+        StartCoroutine(Fade(TextAlpha,0,1,.1f));
+        
+        yield return new WaitForSeconds(4);
+
+        //2 Refletor
+        StartCoroutine(Fade(TextAlpha,1,0,.1f));
+        yield return new WaitForSeconds(.4f);
+        TutImage.sprite = Images[1];
+        TutImage.gameObject.SetActive(true);
+        TutText.text = GetText(4);//este é um refletor.
+        yield return new WaitForSeconds(.1f);
+        StartCoroutine(Fade(TextAlpha,0,1,.1f));
+        yield return new WaitForSeconds(4);
+
+        StartCoroutine(Fade(TextAlpha,1,0,.1f));
+        yield return new WaitForSeconds(.4f);
+        TutImage.sprite = Images[2];
+        TutImage.rectTransform.sizeDelta= new Vector2(200,200);
+        TutText.text = GetText(5); //ele muda a direção do raio.
+        yield return new WaitForSeconds(.1f);
+        StartCoroutine(Fade(TextAlpha,0,1,.1f));
+        
+        yield return new WaitForSeconds(4);
+        
+        StartCoroutine(Fade(TextAlpha,1,0,.1f));
+        yield return new WaitForSeconds(.4f);
+        TutImage.sprite = Images[3];
+        TutImage.rectTransform.sizeDelta= new Vector2(100,100);
+        TutText.text = GetText(6); //ele muda a direção do raio.
+        yield return new WaitForSeconds(.1f);
+        StartCoroutine(Fade(TextAlpha,0,1,.1f));
+        yield return new WaitForSeconds(3);
+          StartCoroutine(Fade(TextAlpha,1,0,.1f));
+        yield return new WaitForSeconds(.4f);
+         
+        TutImage.sprite = Images[4];
+        TutImage.rectTransform.sizeDelta= new Vector2(100,100);
+        TutText.text = GetText(7); //ele muda a direção do raio.
+        yield return new WaitForSeconds(.1f);
+        StartCoroutine(Fade(TextAlpha,0,1,.1f));
+         yield return new WaitForSeconds(4);
+        
+        StartCoroutine(Fade(TextAlpha,1,0,.1f));
     }
     IEnumerator Tutorial1()
     {
@@ -169,7 +242,7 @@ public class Tutorial : MonoBehaviour
         StartCoroutine(Fade(TextAlpha,1,0,.1f));
     }
     
-    IEnumerator Fade(CanvasGroup Alpha, float StartAlpha,float EndAlpha, float time)
+    public static IEnumerator Fade(CanvasGroup Alpha, float StartAlpha,float EndAlpha, float time)
     {
         float i = StartAlpha;
         

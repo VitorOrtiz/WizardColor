@@ -7,6 +7,7 @@ public class GridPanel : MonoBehaviour
     public bool Wall;
     public bool HasItem;
     public bool HasPlayer;
+    public bool CanDragOver = true;
     public bool HasPressure =false;
     public GridObj item;
     public Vector2 position;

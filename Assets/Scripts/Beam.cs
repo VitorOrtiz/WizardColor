@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class Beam : MonoBehaviour
 {
+    public GameObject Sparkparticle;
+    public ParticleSystem GlassParticle;
+    
     public Gradient RedGradient,BlueGradient, GreenGradient, CyanGradient, MagGradient,YellowGradient;
     public LineRenderer line;
     private grid gridcontrol;
-    
+
+    private List<GameObject> particles = new List<GameObject>();    
     public List<lightBeamSeg> Segments = new List<lightBeamSeg>();
     public List<LineRenderer> lineSegments = new List<LineRenderer>();
 
@@ -27,6 +31,7 @@ public class Beam : MonoBehaviour
         }
         lineSegments = new List<LineRenderer>(AvailableLines);
         NewGradient = lineSegments[0].colorGradient;
+
     }
 
     // Update is called once per frame
@@ -44,6 +49,10 @@ public class Beam : MonoBehaviour
         {
             seg.Reset(NewGradient);
         }
+        foreach(GameObject part in particles){
+            Destroy(part);
+        }
+        particles.Clear();
         Segments = new List<lightBeamSeg>();
         AvailableLines = new List<LineRenderer>(lineSegments);
         gridcontrol.ResetTargets();
@@ -140,7 +149,7 @@ public class Beam : MonoBehaviour
                 seg.points.Add(new GridValue{Row = CurRow, Col = CurCol});
                 if(CurrentLine.points[0].Row != CurRow || CurrentLine.points[0].Col != CurCol)
                 Openlines.Add(seg);
-                
+                particles.Add(CreateGlassParticle(obj.item.GetColor(),newpos,seg.dir).gameObject);                
                 break;
 
                 case ObjType.WALL:
@@ -148,6 +157,9 @@ public class Beam : MonoBehaviour
                 AddPositiontoLine(CurrentLine.line,nextPos);
                 Openlines.Remove(CurrentLine);
                 newLines.Add(CurrentLine);
+                Vector3 pos = obj.transform.position;
+                pos.y = CurrentLine.line.transform.position.y;
+                particles.Add(CreateWallParticle(pos,CurrentLine.dir));
                 break;
 
                 case ObjType.TARGET:
@@ -270,6 +282,46 @@ public class Beam : MonoBehaviour
                color == Objcolor.MAGENTA? MagGradient:
                color == Objcolor.YELLOW? YellowGradient:
                NewGradient;
+    }
+    GameObject CreateWallParticle(Vector3 position,Direction dir)
+    {
+        Direction newdir =Reflector.ReturnReverseDirection(dir);
+        Vector3 direction = dirtoVector(newdir);
+        
+        Quaternion rotation = Quaternion.LookRotation(direction,Vector3.up);
+        GameObject spark = Instantiate(Sparkparticle,position+direction *.5f,rotation);
+        return spark;
+    }
+    ParticleSystem CreateGlassParticle(Color color, Vector3 position, Direction dir)
+    {
+        Vector3 direction = dirtoVector(dir);
+        
+        Debug.Log(dir);
+        Quaternion rotation = Quaternion.LookRotation(direction,Vector3.up);
+        //rotation = Quaternion.Euler(rotation.eulerAngles.x,Quaternion.LookRotation(direction,Vector3.up).y + 90,rotation.eulerAngles.z);
+        ParticleSystem part = Instantiate(GlassParticle, position, rotation);
+        var main =part.main;
+        var sub = part.transform.GetChild(0).GetComponent<ParticleSystem>().main;
+        main.startColor = color;
+        sub.startColor = color;
+        return part;
+    }
+    Vector3 dirtoVector(Direction dir)
+    {
+        switch(dir){
+        case Direction.FORWARD:
+        return Vector3.forward;
+        
+        case Direction.BACK:
+        return Vector3.back;
+        
+        case Direction.LEFT:
+        return Vector3.left;
+        
+        case Direction.RIGHT:
+        return Vector3.right;
+        }
+        return Vector3.zero;
     }
 }
 [System.Serializable]

@@ -114,10 +114,11 @@ MonoBehaviour:
   idRotation: 0
   RotDirection: {x: 0, y: 0, z: 0}
   Attatched: 0
+  BeamHit: 0
   mat: {fileID: 64}
-  redMat: {r: 1, g: 0, b: 0, a: 1}
-  GreenMat: {r: 0, g: 1, b: 0, a: 1}
-  BlueMat: {r: 0, g: 0, b: 1, a: 1}
+  redMat: {r: 0.764151, g: 0.082903184, b: 0.082903184, a: 1}
+  GreenMat: {r: 0.08410467, g: 0.6603774, b: 0.08410467, a: 1}
+  BlueMat: {r: 0.08904416, g: 0.08904416, b: 0.6509434, a: 1}
   CyanMat: {r: 0, g: 1, b: 1, a: 1}
   MagMat: {r: 1, g: 0, b: 1, a: 1}
   YellowMat: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}

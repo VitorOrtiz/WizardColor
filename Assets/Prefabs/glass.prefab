@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1409158685665346610}
   - component: {fileID: 5199550284645135863}
   - component: {fileID: 2148296890342282239}
-  - component: {fileID: 3517958881116665174}
+  - component: {fileID: 6543123573363661536}
   m_Layer: 0
   m_Name: glass
   m_TagString: Untagged
@@ -92,7 +92,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3517958881116665174
+--- !u!114 &6543123573363661536
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,7 +101,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7025114887428010995}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f29c080ec96fbd84b9073c751eb3d44a, type: 3}
+  m_Script: {fileID: 11500000, guid: b8a507263481eda41bb271844cee5d43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   CanDrag: 1
@@ -114,6 +114,7 @@ MonoBehaviour:
   idRotation: 0
   RotDirection: {x: 0, y: 0, z: 0}
   Attatched: 0
+  BeamHit: 0
   mat: {fileID: 5199550284645135863}
   redMat: {r: 1, g: 0, b: 0, a: 1}
   GreenMat: {r: 0, g: 1, b: 0, a: 1}
@@ -123,3 +124,5 @@ MonoBehaviour:
   YellowMat: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   defmaterial: {fileID: 2100000, guid: 31fe3c5d3411bf7499a59cc6ac757d4e, type: 2}
   Litup: {fileID: 2100000, guid: fc847e162c9a44e4185f4bb5894e5150, type: 2}
+  particles: {fileID: 0}
+  subparticles: {fileID: 0}

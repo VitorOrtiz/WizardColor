@@ -8,7 +8,8 @@ public class Pressure : GridObj
     public string LevelID;
     
     public List<PressureObj> Objects = new List<PressureObj>();
-   
+    
+
     public bool active;
     public Vector2Int ObjPos;
     public GridPanel curpanel;
@@ -33,6 +34,13 @@ public class Pressure : GridObj
     {
        foreach(PressureObj obj in Objects)
        obj.ActivateObj(act);
+       if((active && !act)||(!active && act))
+       {
+       active = act;
+       Player.player.playerStaff.RedoBeam();
+       }
+       
+       
     }
     public void AddItem(PressureObj obj)
     {
@@ -64,6 +72,7 @@ public class PressureObj{
         return;
         bool active = activeset? !DefActive:DefActive;
         obj.gameObject.SetActive(active);
+        
         grid.thisgrid.getPanel(Row,Col).HasItem = active;
         grid.thisgrid.getPanel(Row,Col).Wall = active;
         CurActive = activeset;

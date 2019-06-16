@@ -34,38 +34,38 @@ public class GridObj : MonoBehaviour
     {
         switch(TarColor){
             case Objcolor.RED:
-            mat.material.color = redMat;
+            mat.material.SetColor("_BaseColor", redMat);
             mat.material.SetColor("_EmissionColor",redMat);
             break;
 
             case Objcolor.GREEN:
-            mat.material.color = GreenMat;
+            mat.material.SetColor("_BaseColor", GreenMat);
             mat.material.SetColor("_EmissionColor",GreenMat);
             break;
 
             case Objcolor.BLUE:
-            mat.material.color = BlueMat;
+            mat.material.SetColor("_BaseColor", BlueMat);
             mat.material.SetColor("_EmissionColor",BlueMat);
             break;
 
-                case Objcolor.CYAN:
-            mat.material.color = CyanMat;
+            case Objcolor.CYAN:
+            mat.material.SetColor("_BaseColor", CyanMat);
             mat.material.SetColor("_EmissionColor",CyanMat);
             break;
 
                 case Objcolor.MAGENTA:
-            mat.material.color = MagMat;
+            mat.material.SetColor("_BaseColor", MagMat);
             mat.material.SetColor("_EmissionColor",MagMat);
             break;
 
                 case Objcolor.YELLOW:
-                mat.material.color = YellowMat;
+                mat.material.SetColor("_BaseColor", YellowMat);
                 mat.material.SetColor("_EmissionColor",YellowMat);
             break;
 
             default:
             mat.material = defmat;
-            mat.material.color = Color.white;
+            mat.material.SetColor("_BaseColor", Color.white);
             mat.material.SetColor("_EmissionColor",Color.white);
             break;
         }
@@ -90,7 +90,13 @@ public class GridObj : MonoBehaviour
         Debug.Log("gay");
         
     }
-    
+    public Color GetColor()
+    {
+        return  oColor == Objcolor.BLUE? 
+        Color.blue:oColor == Objcolor.RED?Color.red: oColor == Objcolor.GREEN?Color.green:
+        oColor == Objcolor.CYAN?Color.cyan:oColor == Objcolor.MAGENTA?Color.magenta:
+        oColor == Objcolor.YELLOW?Color.yellow:Color.white;
+    }
     public void LightDown(){
         if(objtype != ObjType.TARGET)
             return;
@@ -185,6 +191,8 @@ public class GridObj : MonoBehaviour
     public virtual void Fase(){
 
     }
+    public virtual void ActivatePart(Direction dir){}
+    public virtual void DeactivatePart(){}
 } 
 public enum Objcolor{
         GREEN,

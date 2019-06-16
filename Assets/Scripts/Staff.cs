@@ -34,10 +34,10 @@ public class Staff : GridObj
             panel = grid.thisgrid.panellist[(int)GridPosition.x,(int)GridPosition.y];   
 
         
-        if((Attatched && Firing) || (Player.player.state == Player.MoveState.Attatched && Firing)){
+        if((Attatched && Firing) || (Player.player.Att.Attatched && Firing)){
             Reset();
             }
-        else if(!Attatched && !Firing)
+        else if(!Attatched && !Player.player.Att.Attatched && !Firing)
             {
             Activate();
             }

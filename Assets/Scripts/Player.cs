@@ -156,6 +156,13 @@ public class Player : MonoBehaviour
         LookDirection.x = PlayerInputHor;
         LookDirection.z = PlayerInputVer;
     }
+    public void ResetPlayer()
+    {
+        state = MoveState.FreeWalk;
+        Att = new Attatchment();
+        playerStaff.ReturnStaff(this.transform);
+        DroppingStaff = false;
+    }
     void MoveOnGrid()
     {
         AttMoving = true;
@@ -183,7 +190,7 @@ public class Player : MonoBehaviour
         
         targetPanel = grid.thisgrid.getPanel(Row,Col);
         ObjTargetPanel = grid.thisgrid.getPanel(ObjRow,ObjCol);
-        if(targetPanel.HasItem || targetPanel.Wall || ObjTargetPanel.HasItem|| ObjTargetPanel.Wall)
+        if(!targetPanel.CanDragOver|| !ObjTargetPanel.CanDragOver||targetPanel.HasItem || targetPanel.Wall || ObjTargetPanel.HasItem|| ObjTargetPanel.Wall)
         return;
 
         StartCoroutine(WalktoObjPos(targetPanel,ObjTargetPanel));   

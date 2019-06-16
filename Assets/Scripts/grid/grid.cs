@@ -29,7 +29,8 @@ public Pressure Pressure;
 [HideInInspector]
 public Pressure LevelPressure;
 public static grid thisgrid;
-
+[HideInInspector]
+public GridPanel InitialPanel;
 
 public List<GridObj> targets = new List<GridObj>();
 #endregion
@@ -38,8 +39,7 @@ public List<GridObj> targets = new List<GridObj>();
         thisgrid = this;
     }
     void Start()
-    {   
-        Fase1();
+    { 
     }
     public void CreateLevel(int levelId)
     {
@@ -74,7 +74,7 @@ public List<GridObj> targets = new List<GridObj>();
     void createLimits(Vector3 Direction)
     {
         Vector3 pos = newLevel.transform.position;
-        pos+= new Vector3(Direction.x *(Rows/2) +Direction.x,pos.y,Direction.z *(Columns/2) + Direction.z);
+        pos+= new Vector3(Direction.x *(Rows/2) + (Direction.x>0?0:Direction.x),pos.y,Direction.z *(Columns/2) + (Direction.z>0?0:Direction.z));
         if(Direction.x != 0)
         {
             GameObject limit = Instantiate(Limit,pos,Quaternion.identity,newLevel.transform);
@@ -142,9 +142,11 @@ public List<GridObj> targets = new List<GridObj>();
             newPobj.gameObject.SetActive(objects[i].DefActive);
             objects[i].obj = newPobj;
             newobj.Objects.Add(objects[i]);
+            getPanel(objects[i].Row,objects[i].Col).CanDragOver = false;
         }
         newobj.GridPosition = new Vector2(Row,Col); 
         newobj.curpanel = panellist[Row,Col];
+        
         panellist[Row,Col].HasPressure = true;
         LevelPressure = newobj;
     }
@@ -164,6 +166,12 @@ public List<GridObj> targets = new List<GridObj>();
         newpos.y +=1;
         CurPanel.Wall = true;
         return Instantiate(Wall,newpos,Quaternion.identity,newLevel.transform);
+    }
+    public void SetDefaultPos()
+    {
+        Vector3 pos = InitialPanel.transform.position;
+        pos.y = Player.player.transform.position.y;
+        Player.player.transform.position = pos;
     }
     public GridPanel getNextPanel(int Row, int Col, Direction dir)
     {
@@ -217,8 +225,9 @@ public List<GridObj> targets = new List<GridObj>();
 	{
 		CreatePlaneArea(7, 5);
 		SpawnObj(Target, 4, 2, false, Objcolor.RED);
-		SpawnObj(Glass, 1, 2, true);
+		SpawnObj(Glass, 2, 2, true);
         Instantiate(tutorials[0],canvas.transform);
+        InitialPanel = grid.thisgrid.panellist[0,2];
 	}
     void Fase101(){
         CreatePlaneArea(7,7);
@@ -236,18 +245,20 @@ public List<GridObj> targets = new List<GridObj>();
         SpawnObj(Target,5,Columns -1,false,Objcolor.BLUE);
         SpawnObj(Target,6,Columns -1,false,Objcolor.MAGENTA);
         CreatePressure(2,1, new PressureObj[]{new PressureObj(Glass,6,1,true)});
+        
     }
     void Fase2()
 	{
 		CreatePlaneArea(8, 6);
-		int[,] poss = new int[,] { { 0, 1 }, { 1, 1 }, { 2, 1 }, { 5, 1 }, { 6, 1 }, { 7, 1 }, { 6, 0 }, { 6, 2 }, { 6, 3 }, { 6, 5 } };
+		int[,] poss = new int[,] { { 0, 1 }, { 1, 1 }, { 2, 1 }, { 5, 1 }, { 6, 1 }, { 7, 1 }, { 6, 0 }, { 6, 2 }, { 6, 3 },{6,4}, { 6, 5 } };
 		CreateWalls(poss);
 		SpawnObj(Target, 2, 0, false, Objcolor.GREEN);
 	//	SpawnObj(Glass, 4, 1, false);
 		SpawnObj(Reflector, 5, 0, true);
 		SpawnObj(Reflector, 2, 5, true);
-		CreatePressure(2, 3,new PressureObj[]{new PressureObj(Wall,6,4,true),new PressureObj(Wall,3,1,false),new PressureObj(Glass,4,1,false)});
-
+		CreatePressure(2, 3,new PressureObj[]{new PressureObj(Wall,3,1,false),new PressureObj(Glass,4,1,false)});
+        Instantiate(tutorials[1],canvas.transform);
+        InitialPanel = grid.thisgrid.panellist[1,4];
 	}
 	void Fase3()
 	{
@@ -260,7 +271,7 @@ public List<GridObj> targets = new List<GridObj>();
 		SpawnObj(Glass, 3, 0, true);
 		SpawnObj(Glass, 1, 5, true);
 		CreatePressure(1, 3, new PressureObj[]{new PressureObj(Wall,5,1,true)});
-
+        InitialPanel = grid.thisgrid.panellist[1,3];
 	}
 	void Fase4()
 	{
@@ -276,6 +287,7 @@ public List<GridObj> targets = new List<GridObj>();
 		SpawnObj(Glass, 6, 3, false);
 		SpawnObj(Glass, 2, 2, false);
 		SpawnObj(Glass, 1, 1, false);
+        InitialPanel = grid.thisgrid.panellist[0,0];
 	}
 	void Fase5()
 	{
